@@ -1,26 +1,32 @@
-
-import 'package:auto_route/auto_route.dart';
-import 'package:flutter_auth/features/auth/login_screen.dart';
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/controllers/auth_service.dart';
 
-import 'features/home/home.dart';
+import 'api/api.dart';
 import 'firebase_options.dart';
 import 'package:flutter_auth/router/router.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'dart:developer';
 
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: ".env");
+  final client = initApiClient();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MyApp());
+  runApp(MyApp(apiClient: client));
 }
 
+
+
+
+
+
 class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+  const MyApp({super.key, required this.apiClient});
+
+  final CoachApiClient apiClient;
 
   @override
   State<MyApp> createState() => _SklonAppState();
@@ -29,6 +35,14 @@ class MyApp extends StatefulWidget {
 class _SklonAppState extends State<MyApp> {
 
   final _router = AppRouter();
+
+  @override
+  void initState() {
+    widget.apiClient.getAllCouches().then((value) {
+      print(value);
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
