@@ -5,28 +5,21 @@ import 'api/api.dart';
 import 'firebase_options.dart';
 import 'package:flutter_auth/router/router.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'dart:developer';
 
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
-  final client = initApiClient();
+  final client = CoachApiClient.create(apiUrl: dotenv.env['API_URL']);
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(MyApp(apiClient: client));
+  runApp(const MyApp());
 }
 
 
-
-
-
-
 class MyApp extends StatefulWidget {
-  const MyApp({super.key, required this.apiClient});
-
-  final CoachApiClient apiClient;
+  const MyApp({super.key});
 
   @override
   State<MyApp> createState() => _SklonAppState();
@@ -35,14 +28,6 @@ class MyApp extends StatefulWidget {
 class _SklonAppState extends State<MyApp> {
 
   final _router = AppRouter();
-
-  @override
-  void initState() {
-    widget.apiClient.getAllCouches().then((value) {
-      print(value);
-    });
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {

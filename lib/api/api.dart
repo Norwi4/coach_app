@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'model/coach.dart';
 
 part 'api.g.dart';
@@ -9,15 +8,15 @@ part 'api.g.dart';
 abstract class CoachApiClient {
   factory CoachApiClient(Dio dio, {String baseUrl}) = _CoachApiClient;
 
+  factory CoachApiClient.create({String? apiUrl}) {
+    final dio = Dio();
+    if(apiUrl != null) {
+      return CoachApiClient(dio, baseUrl: apiUrl);
+    }
+    return CoachApiClient(dio);
+  }
+
   @GET('/GetAllCouches')
   Future<List<Coach>> getAllCouches();
 }
 
-CoachApiClient initApiClient() {
-  final apiUrl = dotenv.env['API_URL'];
-  final dio = Dio();
-  if(apiUrl != null) {
-    return CoachApiClient(dio, baseUrl: apiUrl);
-  }
-  return CoachApiClient(dio);
-}
