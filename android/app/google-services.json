@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "161509810880",
+    "project_id": "coachapp-d9407",
+    "storage_bucket": "coachapp-d9407.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:161509810880:android:d3a7724c9986af8ea64325",
+        "android_client_info": {
+          "package_name": "com.example.flutter_auth"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFDRg4DS979XoAwRpGOAbGYTfSCKUqwb0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
